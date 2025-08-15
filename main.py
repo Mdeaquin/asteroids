@@ -1,7 +1,7 @@
 import pygame
 from constants import *
 from player import Player
-from asteroid import Asteroid
+from asteroid import *
 from asteroidfield import AsteroidField
 from circleshape import CircleShape
 from shot import Shot
@@ -31,6 +31,11 @@ def main():
                 return        
         screen.fill("black")
         updatable.update(dt)
+        for obj in asteroids:
+            for shot in shots:
+                if CircleShape.collision_check(obj, shot) == True:
+                    Asteroid.split(obj)
+                    pygame.sprite.Sprite.kill(shot)
         for obj in asteroids:
             if CircleShape.collision_check(obj, player) == True:
                 raise SystemExit("Game over!")
